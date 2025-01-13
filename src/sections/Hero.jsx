@@ -6,6 +6,10 @@ import { OrbitControls, useGLTF } from '@react-three/drei';
 import HackerRoom from '../components/HackerRoom'
 import {Leva,useControls } from 'leva';
 import {useMediaQuery} from 'react-responsive';
+import Target from '../components/Target';
+import ReactLogo from '../components/reactlogo';
+import Cube from '../components/cube';
+import HeroCamera from '../components/HeroCamera';
 // function Model() {
 //   const { scene } = useGLTF('/hacker-room.glb'); 
 //   return (
@@ -19,17 +23,17 @@ import {useMediaQuery} from 'react-responsive';
 // }
 
 const Hero = () => {
-  // const x=useControls('HackerRoom',{
-  //   positionX : {value:0, min:-10, max:10},
-  //   positionY : {value:2.5, min:-10, max:10},
-  //   positionZ : {value:2.5, min:-10, max:10},
-  //   rotationX : {value:2.5, min:-10, max:10},
-  //   rotationY : {value:2.5, min:-10, max:10}, 
-  //   rotationZ : {value:2.5, min:-10, max:10},
-  //   scale:      {value:1, min:0.001, max:1}
+//   const x=useControls('ReactLogo',{
+//     positionX : {value:0, min:-10, max:10},
+//     positionY : {value:2.5, min:-10, max:10},
+//     positionZ : {value:2.5, min:-10, max:10},
+//     rotationX : {value:0, min:-10, max:10},
+//     rotationY : {value:0, min:-10, max:10}, 
+//     rotationZ : {value:0, min:-10, max:10},
+//     scale:      {value:1, min:0.001, max:1}
 
-  // }
-  //)
+//   }
+//  )
   const smallerscreen= useMediaQuery({maxWidth:768})
   return (
     <section className="min-h-screen w-full flex flex-col relative" id="home">
@@ -48,17 +52,33 @@ const Hero = () => {
             <ambientLight intensity={0.5} />
             <directionalLight position={[0, 10, 10]} intensity={1.5} />
             {/* <Model /> */}
+            <HeroCamera>
             <HackerRoom
             //  scale={x.scale} 
             //  position={[x.positionX, x.positionY ,x.positionZ]} 
             //  rotation={[x.rotationX, x.rotationY ,x.rotationZ]} 
-            position={[0,-1.3 ,0.1]}
-            // scale={smallerscreen ? 0.02 :0.03} fro smaller screens
-            scale={0.03}
-            rotation={[3.5,5.7,3.1]}
+            position={[0,smallerscreen ?-1 :-2 ,0.1]}
+            scale={smallerscreen ? 0.027 :0.035} fro smaller screens
+            rotation={[0.3,3.4,0]}
+            /></HeroCamera>
+            {/* <OrbitControls enableZoom={false} enablePan={true} enableRotate={true} /> */}
+            <group>
+              <Target
+                scale={smallerscreen?0.37:0.47} 
+                position={[smallerscreen? -2.3:-4.2, smallerscreen?0.6:0.9,3.5]} 
+                rotation={[0.2,0.8,0]} />
+              <ReactLogo
+               scale={smallerscreen?0.002 :0.003} 
+             position={[smallerscreen? 2.5:4.2, 1.7 , 1.3]} 
+             rotation={[0,-0.8,0]} 
             />
-            <OrbitControls enableZoom={false} enablePan={true} enableRotate={true} />
+            <Cube
+            position={[smallerscreen?3:7,smallerscreen? -0.7 : -2.5, 0]} rotation={[2.6, 0.8, -1.8]} scale={smallerscreen? 0.3:0.6} />
+            </group>
         </Canvas>
+      </div>
+      <div className="absolute bottom-7 left-0 right-0 w-full z-10">
+
       </div>
     </section>
   );
